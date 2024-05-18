@@ -1,0 +1,29 @@
+/* Slider.css */
+.carousel-button-prev {
+    position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+}
+.carousel-button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+}
+
+.carousel-button-prev {
+  left: 10px; /* Ajusta el valor para posicionar la flecha de Previous a la izquierda */
+}
+
+.carousel-button-next {
+  right: 10px; /* Ajusta el valor para posicionar la flecha de Next a la derecha */
+}
