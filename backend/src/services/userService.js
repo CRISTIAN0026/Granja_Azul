@@ -36,6 +36,8 @@ export async function login(req, res) {
     expiresIn: "4h",
   });
 
+  user.token = token;
+
   res.send({
     success: true,
     message: "Autenticación satisfactoria",
