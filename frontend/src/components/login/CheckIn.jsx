@@ -1,16 +1,36 @@
 import { TextField, Button, Container, Stack, Typography, Grid, Link } from "@mui/material";
 import MenuItem from '@mui/material/MenuItem';
+import { useForm } from "../utility/hooks";
 
 // El componente para registrarse
 function Register() {
+
+    async function registerUserCallback() {
+    console.log("CallBack hit");
+    await registerUser();
+  }
+
+  const { onChange, onSubmit, values } = useForm(registerUserCallback, {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+    const [registerUser] = {
+    
+   variables: { registerInput: values },
+  };
+
   return (
     <Container spacing={2} maxWidth="sm">
       <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: '20px'}}>Registrarse</Typography>
       <p>Regístrate a continuación para crear una cuenta.</p>
       <Stack spacing={2} paddingBottom={2}>
-        <TextField label="Username" name="username"  />
-        <TextField label="Email" name="email"  type="email"/>
-        <TextField label="Password" name="password"  type="password"/>
+        <TextField label="Username" name="username"  onChange={onChange}/>
+        <TextField label="Email" name="email" onChange={onChange} type="email"/>
+        <TextField label="Password" name="password" onChange={onChange} type="password" />
+        <TextField label="Confirm password" name="confirmPassword" onChange={onChange} type="password" />
         <TextField 
           id="outlined-select-currency"
           select

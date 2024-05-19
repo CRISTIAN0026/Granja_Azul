@@ -4,12 +4,12 @@ import User from "../models/User.js";
 import "dotenv/config";
 
 export async function register(req, res) {
-  const { username, email, password } = req.body;
+  const { username, email, password, type } = req.body;
   if (!password) {
     return res.status(400).send("La contraseña es requerida");
   }
   const hashedPassword = await hash(password, 10);
-  const user = new User({ username, email, password: hashedPassword });
+  const user = new User({ username, email, type, password: hashedPassword });
 
   const token = jwt.sign({ user_id: user._id, email }, process.env.SECRET_KEY, {
     expiresIn: "4h",
