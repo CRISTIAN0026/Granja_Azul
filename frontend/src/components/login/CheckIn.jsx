@@ -51,7 +51,7 @@ function Register() {
                 ¿Ya tienes una cuenta? Inicia sesión
                 </Link>
               </Grid>
-      <Button style={{ marginTop: '20px', textTransform:'none' }} variant="contained" >Registrarse</Button>
+      <Button style={{ marginTop: '20px', textTransform:'none' }} variant="contained" onClick={onSubmit}>Registrarse</Button>
     </Container>
   );
 }
