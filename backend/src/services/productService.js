@@ -15,3 +15,13 @@ export async function getProduct(req, res) {
   }
   res.json(product);
 }
+
+export async function getAllProducts(req, res) {
+  try {
+    const products = await Product.find();
+    console.log(products)
+    res.json(products);
+  } catch (error) {
+    res.status(500).send("Error al obtener los productos");
+  }
+}

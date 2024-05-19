@@ -2,8 +2,14 @@ import pkg from "mongoose";
 const { model, Schema } = pkg;
 
 const productSchema = new Schema({
-  name: String,
-  precie:  Number,
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default model("Product", productSchema);

@@ -7,22 +7,26 @@ CardContent,
 CardMedia, 
 CardActions, 
 Button } from "@mui/material";
+import { getProducts } from "../../services/apiService";
 
 // Muestra los animales
 // por ahora usa una api externa de Rick y Morty
 export default function Chickens(){
-    const [chickenData, setChickenData] = useState([]);
+       const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch('https://rickandmortyapi.com/api/character/')
-  .then(response => response.json())
-  .then(data => setChickenData(data.results))
-  }, [chickenData]);
+    const getData = async () => {
+      const result = await getProducts();
+      setData(result);
+    };
+
+    getData();
+  }, []);
   
 
   return (
     <Grid container spacing={2} justifyContent='center' marginTop='30px'>
-        {chickenData.map(({image, name}) => (
+        {data?.map(({image, name}) => (
             <Card key={name} sx={{ maxWidth: 345, marginBottom: '20px', marginLeft:'20px'}}>
             <CardMedia
             sx={{ height: 140 }}
