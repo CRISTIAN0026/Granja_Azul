@@ -30,8 +30,8 @@ function Login() {
   
     return (
       <Container spacing={2} maxWidth="sm">
-        <h3>Login</h3>
-        <p>Inicia sesión!</p>
+        <h3>Inicia sesión</h3>
+        <p>Inicia sesión para acceder a los recursos!</p>
         <Stack spacing={2} paddingBottom={2}>
           <TextField
             label="Email"
@@ -49,13 +49,17 @@ function Login() {
         <Grid item>
           <Link
             style={{ textDecoration: "none" }}
-            href="/login"
+            href="/register"
             variant="body2"
           >
             ¿No tienes cuenta? Regístrate
           </Link>
         </Grid>
-        <Button variant="contained" onClick={onSubmit}>
+        <Button
+          style={{ marginTop: "20px" }}
+          variant="contained"
+          onClick={onSubmit}
+        >
           Login
         </Button>
       </Container>
