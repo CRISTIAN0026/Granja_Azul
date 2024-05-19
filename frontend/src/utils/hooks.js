@@ -9,7 +9,8 @@ export const useForm = (callback, initialState = {}) => {
   };
 
   const onSubmit = (event) => {
-    event.preventDefault();
+      event.preventDefault();
+      console.log("sdsdd")
     callback();
   };
 

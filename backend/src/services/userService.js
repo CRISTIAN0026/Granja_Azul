@@ -17,7 +17,7 @@ export async function register(req, res) {
 
   user.token = token;
   await user.save();
-  res.send("Usuario registrado con éxito");
+  res.send({ success:true, message: "Usuario registrado con éxito", user: user });
 }
 
 export async function login(req, res) {
@@ -35,5 +35,10 @@ export async function login(req, res) {
   const token = jwt.sign({ email: user.email }, "secret_key", {
     expiresIn: "4h",
   });
-  res.json({ message: "Autenticación satisfactoria", token });
+
+  res.send({
+    success: true,
+    message: "Autenticación satisfactoria",
+    user: user,
+  });
 }
