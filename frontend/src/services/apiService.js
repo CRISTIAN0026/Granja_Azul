@@ -15,6 +15,23 @@ export const getProducts = async () => {
   }
 };
 
+export const postProduct = async ({ name, price }) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}api/create`, {
+      name,
+      price,
+    });
+
+    if (response.status !== 200) {
+      throw new Error("Network response was not ok");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
 export const registerUser = async ({ username, email, password, type }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}user/register`, {
