@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Grid, Button, Box, Paper } from "@mui/material";
+import { Grid, Button, Box, Paper, Typography } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GroupIcon from "@mui/icons-material/Group";
-import IconButton from '@mui/material/IconButton';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EggIcon from "@mui/icons-material/Egg";
 import NavBar from './NaBar';
 
 // Para navegar en la pagina
@@ -25,7 +24,7 @@ export default function Nav() {
         <Grid
           container
           spacing={1}
-          style={{ backgroundColor: "#F1F1F1", padding: 0 }}
+          style={{ backgroundColor: "#F1F1F1", padding: 0, minHeight: "110px" }}
         >
           <Grid
             container
@@ -34,12 +33,22 @@ export default function Nav() {
             xs={4}
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <img
-              width="370px"
-              height="120px"
-              alt="logo"
-              src={"../../image/gratis-png-gallina-thumbnail.png"}
-            />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                marginLeft: "50px",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              Granja Azul
+              <EggIcon
+                sx={{ color: "#65BBFF", minWidth: "30px", minHeight: "40px" }}
+              />
+            </Typography>
           </Grid>
           <Grid container item xs={12} md={4}>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -48,7 +57,7 @@ export default function Nav() {
                 sx={{
                   textTransform: "none",
                   backgroundColor:
-                    buttonColor === inicio ? "#65BBFF " : "#EDF7FF",
+                    buttonColor === inicio ? "#65BBFF" : "#EDF7FF",
                   color: "black",
                 }}
                 startIcon={<HomeIcon color="primary" />}
@@ -60,8 +69,7 @@ export default function Nav() {
                 sx={{
                   textTransform: "none",
                   color: "black",
-                  backgroundColor:
-                    buttonColor === aves ? "#65BBFF " : "#EDF7FF",
+                  backgroundColor: buttonColor === aves ? "#65BBFF" : "#EDF7FF",
                 }}
                 startIcon={<TwitterIcon color="primary" />}
               >
@@ -89,11 +97,6 @@ export default function Nav() {
             md={4}
             sx={{ justifyContent: "flex-end" }}
           >
-            {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton href={login} color="primary">
-      <AccountCircleIcon fontSize="large"/>
-    </IconButton>
-    </Box> */}
             <NavBar />
           </Grid>
         </Grid>

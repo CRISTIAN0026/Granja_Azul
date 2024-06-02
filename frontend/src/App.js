@@ -5,7 +5,9 @@ import Home from './components/home/Home';
 import Chickens from './components/chickens/Chickens';
 import About from './components/about/About';
 import Login from './components/login/Loging';
-import RegistrationForm from './components/login/CheckIn';
+import RegistrationForm from "./components/login/CheckIn.jsx";
+import FormChickens from "./components/chickens/FormChickens.jsx";
+
 
 const App = () => {
   return (
@@ -17,6 +19,7 @@ const App = () => {
         <Route path="/nosotros" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/crear-ave" element={<FormChickens />} />
       </Routes>
     </Router>
   );

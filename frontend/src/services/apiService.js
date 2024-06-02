@@ -15,11 +15,14 @@ export const getProducts = async () => {
   }
 };
 
-export const postProduct = async ({ name, price }) => {
+export const postProduct = async ({ name, price, amount, description, image }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}api/create`, {
       name,
       price,
+      amount,
+      description,
+      image,
     });
 
     if (response.status !== 200) {
