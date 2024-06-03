@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import CartContext from "./CartContext";
+import { api } from "./authContext.js";
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
 
@@ -9,13 +10,7 @@ export function useCart() {
   const addItem = async (item) => {
     dispatch({ type: "ADD_ITEM", item });
 
-    const response = await fetch(`${API_BASE_URL}/api/cart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
+    const response = await api.post(`${API_BASE_URL}shopping/cart`, item);
 
     return response;
   };
@@ -23,7 +18,7 @@ export function useCart() {
   const removeItem = async (itemId) => {
     dispatch({ type: "REMOVE_ITEM", itemId });
 
-    const response = await fetch(`${API_BASE_URL}/api/cart/${itemId}`, {
+    const response = await api.post(`${API_BASE_URL}shopping/cart/${itemId}`, {
       method: "DELETE",
     });
     return response;

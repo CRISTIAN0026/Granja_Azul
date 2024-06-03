@@ -1,23 +1,23 @@
-import axios from "axios";
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
+import { api } from "../contexts/authContext.js"
 
 export const getProducts = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}api/products`);
-      
-    if (!response.ok) {
+  try {
+    const response = await api.get(`api/products`);
+
+    if (response.status !== 200) {
       throw new Error("Network response was not ok");
     }
-    return await response.json();
+    return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 };
 
+
 export const postProduct = async (formData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}api/create`, formData, {
+    const response = await api.post(`api/create`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -36,7 +36,7 @@ export const postProduct = async (formData) => {
 
 export const registerUser = async ({ username, email, password, type }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}user/register`, {
+    const response = await api.post(`user/register`, {
       username,
       email,
       password,
@@ -52,10 +52,12 @@ export const registerUser = async ({ username, email, password, type }) => {
 
 export const loginUser = async ({ email, password }) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}user/login`, {
+    const response = await api.post(`user/login`, {
       email,
       password,
     });
+
+    
 
     return response.data;
   } catch (error) {

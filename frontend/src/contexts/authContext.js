@@ -1,5 +1,8 @@
 import React, { createContext, useReducer } from "react";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:4000";
 
 const initialState = {
   user: null,
@@ -38,12 +41,55 @@ function authReducer(state, action) {
   }
 }
 
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
+
+api.interceptors.request.use(
+  (config) => {
+    
+    const token = localStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+function setAuthToken(token) {
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    api.defaults.headers.common["Content-Type"] = "application/json";
+  } else {
+    delete api.defaults.headers.common["Authorization"];
+  }
+}
+
+
+if (localStorage.getItem("token")) {
+  setAuthToken(localStorage.getItem("token"));
+}
+
 function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  function setAuthToken(token) {
+    if (token) {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      api.defaults.headers.common["Content-Type"] = "application/json";
+    } else {
+      delete api.defaults.headers.common["Authorization"];
+    }
+  }
+
   const login = (userData) => {
     localStorage.setItem("token", userData.token);
-    console.log(userData)
+    setAuthToken(userData.token);
     dispatch({
       type: "LOGIN",
       payload: userData,
@@ -63,4 +109,4 @@ function AuthProvider(props) {
   );
 }
 
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider, api };

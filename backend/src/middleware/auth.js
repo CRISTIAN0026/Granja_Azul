@@ -1,23 +1,26 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const authMiddleware = (req, _, next) => {
-  const token = req.headers.authorization || "";
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-  try {
-    if (!token) {
-      req.user = null;
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+      if (err) {
+        console.log("Token verification error: ", err);
+        return res.sendStatus(403); // Forbidden
+      }
+
+      req.user = user;
+      console.log("req.user ", req.user);
       next();
-    } else {
-      const decodedUser = jwt.verify(token, process.env.SECRET_KEY);
-      req.user = decodedUser;
-      next();
-    }
-  } catch (error) {
-    console.error("Error verifying token:", error);
-    req.user = null;
-    next();
+    });
+  } else {
+    console.log("No auth header");
+    res.sendStatus(401); // Unauthorized
   }
 };
 
-export default authMiddleware;
+export default authenticateJWT;

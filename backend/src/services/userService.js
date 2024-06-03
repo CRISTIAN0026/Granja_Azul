@@ -12,7 +12,12 @@ export async function register(req, res) {
   const user = new User({ username, email, type, password: hashedPassword });
 
   const token = jwt.sign(
-    { user_id: user._id, email, type: user.type, name: user.username },
+    {
+      email: user.email,
+      type: user.type,
+      username: user.username,
+      id: user._id,
+    },
     process.env.SECRET_KEY,
     {
       expiresIn: "4h",
@@ -28,26 +33,35 @@ export async function login(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
+  
+
   if (!user) {
     return res.status(400).send("Error en la autenticación");
   }
-  
+
   const isValid = compare(password, user.password);
   if (!isValid) {
     return res.status(400).send("Error en la autenticación");
   }
 
   const token = jwt.sign(
-    { email: user.email, type: user.type, name: user.username },
-    "secret_key",
+    {
+      email: user.email,
+      type: user.type,
+      username: user.username,
+      id: user._id,
+    },
+    process.env.SECRET_KEY,
     {
       expiresIn: "4h",
     }
   );
 
-
   user.token = token;
 
+  res.set("authorization", `Bearer ${token}`);
+
+  await user.save();
   res.send({
     success: true,
     message: "Autenticación satisfactoria",

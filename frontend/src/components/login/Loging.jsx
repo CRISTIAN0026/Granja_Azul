@@ -4,6 +4,7 @@ import { useForm } from "../../utils/hooks.js";
 import { loginUser } from "../../services/apiService.js";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext.js";
+import axios from "axios";
 
 // Componente para iniciar sesión
 function Login() {
@@ -18,6 +19,7 @@ function Login() {
     });
 
     if (response.success) {
+      console.log("Token:", response.user.token);
       context.login(response.user);
       navigate("/");
     }

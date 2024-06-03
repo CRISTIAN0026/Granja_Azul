@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import {
 Grid, 
 Typography, 
@@ -9,9 +9,11 @@ CardActions,
 Button } from "@mui/material";
 import { getProducts } from "../../services/apiService";
 import { useCart } from "../../contexts/useCart.js";
+import { AuthContext } from "../../contexts/authContext.js";
 
 // Muestra los animales
-export default function Chickens(){
+export default function Chickens() {
+  const { user } = useContext(AuthContext);
   const [data, setData] = useState(null);
   const { addItem } = useCart(); 
 
@@ -55,18 +57,24 @@ export default function Chickens(){
             <Typography variant="body2" color="text.secondary">
               {product.description}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography marginTop="5px" variant="body2" color="text.secondary">
               Cantidad disponible: {product.amount}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" variant="contained" color="primary">
+            <Button
+              disabled={user?.type === "admin" ? true : false}
+              size="small"
+              variant="contained"
+              color="primary"
+            >
               Comprar
             </Button>
             <Button
               size="small"
               variant="outlined"
               color="primary"
+              disabled={user?.type === "admin" ? true : false}
               onClick={() => handleAddToCart(product)}
             >
               Agregar al carrito

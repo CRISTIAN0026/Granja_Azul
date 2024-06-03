@@ -46,14 +46,16 @@ const settings = ["Cerrar sesión"];
                       sx={{ color: "black" }}
                       onClick={handleOpenUserMenu}
                     >
-                      <Avatar alt={user?.name} />
+                      <Avatar alt={user?.username} />
                     </IconButton>
-                    <Typography textAlign="center">{user?.name}</Typography>
+                    <Typography textAlign="center">
+                      {user?.username}
+                    </Typography>
                   </div>
                 </Tooltip>
-                <Button variant="contained" href="/crear-ave">
+                {user?.type === "admin" &&<Button variant="contained" href="/crear-ave">
                   Publicar productos
-                </Button>
+                </Button>}
               </Box>
             )}
             <Menu
