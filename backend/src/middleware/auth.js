@@ -10,16 +10,15 @@ const authenticateJWT = (req, res, next) => {
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
       if (err) {
         console.log("Token verification error: ", err);
-        return res.sendStatus(403); // Forbidden
+        return res.sendStatus(403); 
       }
 
       req.user = user;
-      console.log("req.user ", req.user);
       next();
     });
   } else {
     console.log("No auth header");
-    res.sendStatus(401); // Unauthorized
+    res.sendStatus(401); 
   }
 };
 
