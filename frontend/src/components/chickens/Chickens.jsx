@@ -8,11 +8,12 @@ CardMedia,
 CardActions, 
 Button } from "@mui/material";
 import { getProducts } from "../../services/apiService";
+import { useCart } from "../../contexts/useCart.js";
 
 // Muestra los animales
-// por ahora usa una api externa de Rick y Morty
 export default function Chickens(){
-       const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
+  const { addItem } = useCart(); 
 
   useEffect(() => {
     const getData = async () => {
@@ -22,36 +23,57 @@ export default function Chickens(){
 
     getData();
   }, []);
+
+  const handleAddToCart = (product) => {
+    addItem(product); 
+  };
   
 
   return (
     <Grid container spacing={2} justifyContent="center" marginTop="30px">
-      {data?.map(({ image, name, price, description, amount }) => (
+      {data?.map((product) => (
         <Card
-          key={name}
+          key={product.name}
           sx={{ maxWidth: 345, marginBottom: "20px", marginLeft: "20px" }}
         >
-          <CardMedia sx={{ height: 140 }} image={image} title="green iguana" />
+          <CardMedia
+            sx={{ height: 140 }}
+            image={product.image}
+            title={product.name}
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {name}
+              {product.name}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
-              {parseInt(price).toLocaleString("es-CO", {
+              {parseInt(product.price).toLocaleString("es-CO", {
                 style: "currency",
                 currency: "COP",
                 minimumFractionDigits: 0,
               })}
             </Typography>
-
             <Typography variant="body2" color="text.secondary">
-              {description}
+              {product.description}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Cantidad disponible: {product.amount}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small">Comprar</Button>
-            <Button size="small">Agregar al carrito</Button>
-            <Button size="small">Ver</Button>
+            <Button size="small" variant="contained" color="primary">
+              Comprar
+            </Button>
+            <Button
+              size="small"
+              variant="outlined"
+              color="primary"
+              onClick={() => handleAddToCart(product)}
+            >
+              Agregar al carrito
+            </Button>
+            <Button size="small" color="primary">
+              Ver
+            </Button>
           </CardActions>
         </Card>
       ))}

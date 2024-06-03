@@ -11,9 +11,13 @@ export async function register(req, res) {
   const hashedPassword = await hash(password, 10);
   const user = new User({ username, email, type, password: hashedPassword });
 
-  const token = jwt.sign({ user_id: user._id, email }, process.env.SECRET_KEY, {
-    expiresIn: "4h",
-  });
+  const token = jwt.sign(
+    { user_id: user._id, email, type: user.type, name: user.username },
+    process.env.SECRET_KEY,
+    {
+      expiresIn: "4h",
+    }
+  );
 
   user.token = token;
   await user.save();
@@ -32,9 +36,15 @@ export async function login(req, res) {
   if (!isValid) {
     return res.status(400).send("Error en la autenticación");
   }
-  const token = jwt.sign({ email: user.email }, "secret_key", {
-    expiresIn: "4h",
-  });
+
+  const token = jwt.sign(
+    { email: user.email, type: user.type, name: user.username },
+    "secret_key",
+    {
+      expiresIn: "4h",
+    }
+  );
+
 
   user.token = token;
 

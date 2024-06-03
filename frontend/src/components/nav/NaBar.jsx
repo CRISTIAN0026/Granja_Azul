@@ -41,13 +41,15 @@ const settings = ["Cerrar sesión"];
             {user && (
               <Box>
                 <Tooltip title="Pulse click">
-                  <IconButton
-                    sx={{ color: "black" }}
-                    onClick={handleOpenUserMenu}
-                  >
-                    <Avatar alt={user.email} />
-                  </IconButton>
-                  <Typography textAlign="center">{user?.email}</Typography>
+                  <div>
+                    <IconButton
+                      sx={{ color: "black" }}
+                      onClick={handleOpenUserMenu}
+                    >
+                      <Avatar alt={user?.name} />
+                    </IconButton>
+                    <Typography textAlign="center">{user?.name}</Typography>
+                  </div>
                 </Tooltip>
                 <Button variant="contained" href="/crear-ave">
                   Publicar productos

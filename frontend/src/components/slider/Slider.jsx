@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 // es el slider para mostrar imágenes en la pagina principal
@@ -24,30 +24,26 @@ const items = [
 
 const Slider = () => {
   return (
-    <Box sx={{
-        display:'flex',
-        justifyContent:'center',
-        marginTop:'50px'
-    }}>
-        <Grid container xs={9}>
-    <Carousel
-      showThumbs={false}
-      showStatus={false}
-      infiniteLoop
-      autoPlay
-      centerMode
-      centerSlidePercentage={100}
-      selectedItem={0}
-    >
-      {items.map((item) => (
-        <div key={item.src}>
-          <img src={item.src} alt={item.altText} />
-          <p className="legend">{item.caption}</p>
-        </div>
-      ))}
-    </Carousel>
+    <Grid container style={{justifyContent:"center"}}>
+      <Grid item xs={9}>
+        <Carousel
+          showThumbs={false}
+          showStatus={false}
+          infiniteLoop
+          autoPlay
+          centerMode
+          centerSlidePercentage={100}
+          selectedItem={0}
+        >
+          {items.map((item) => (
+            <div key={item.src}>
+              <img src={item.src} alt={item.altText} />
+              <p className="legend">{item.caption}</p>
+            </div>
+          ))}
+        </Carousel>
+      </Grid>
     </Grid>
-    </Box>
   );
 };
 
