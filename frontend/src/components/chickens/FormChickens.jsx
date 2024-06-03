@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Container, Stack } from "@mui/material";
 import { useForm } from "../../utils/hooks.js";
-import { loginUser } from "../../services/apiService.js";
+import { postProduct } from "../../services/apiService.js";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/authContext.js";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
@@ -21,45 +20,27 @@ const VisuallyHiddenInput = styled("input")({
 
 export default function FormChickens() {
   let navigate = useNavigate();
-    const context = useContext(AuthContext);
-    const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
 
-    const handleFileChange = (event) => {
-      setFile(event.target.files[0]);
-    };
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
 
   async function loginUserCallback() {
-    // const { name, price, description, amount } = values;
-    // const formData = new FormData();
-    // formData.append("image", file);
 
-    // const response = await loginUser({
-    //   name,
-    //   price,
-    //   amount,
-    //   description,
-    //   image: formData,
-    // });
+     const formData = new FormData();
+     formData.append("name", values.name);
+     formData.append("price", values.price);
+     formData.append("description", values.description);
+     formData.append("amount", values.amount);
+     formData.append("image", image); 
 
-    // if (response.success) {
-    //   context.login(response.user);
-    //   navigate("/");
-      // }
-      const { name, price, description, amount } = values;
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("price", price);
-      formData.append("amount", amount);
-      formData.append("description", description);
-      formData.append("image", file);
+     const response = await postProduct(formData);
 
-      const response = await loginUser(formData);
-
-      if (response.success) {
-        context.login(response.user);
-        navigate("/");
-      }
+     if (response.success) {
+       navigate("/nuestras-aves");
+     }
   }
 
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
@@ -67,10 +48,10 @@ export default function FormChickens() {
     price: "",
     amount: "",
     description: "",
-    image:null
+    image:""
   });
-    console.log(values)
-    console.log(file);
+
+    
   return (
     <Container spacing={2} maxWidth="sm">
       <h3>Publica un producto</h3>
@@ -108,7 +89,7 @@ export default function FormChickens() {
           variant="contained"
           color="success"
           tabIndex={-1}
-          onChange={handleFileChange}
+          onChange={handleImageChange}
           startIcon={<CloudUploadIcon />}
         >
           Subir imagen

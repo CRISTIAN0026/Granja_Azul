@@ -15,14 +15,12 @@ export const getProducts = async () => {
   }
 };
 
-export const postProduct = async ({ name, price, amount, description, image }) => {
+export const postProduct = async (formData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}api/create`, {
-      name,
-      price,
-      amount,
-      description,
-      image,
+    const response = await axios.post(`${API_BASE_URL}api/create`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
     if (response.status !== 200) {
@@ -34,6 +32,7 @@ export const postProduct = async ({ name, price, amount, description, image }) =
     throw error;
   }
 };
+
 
 export const registerUser = async ({ username, email, password, type }) => {
   try {

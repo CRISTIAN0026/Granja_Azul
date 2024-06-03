@@ -6,7 +6,12 @@ import {
   getAllProducts,
 } from "../services/productService.js";
 
-router.post("/create", createProduct);
+
+import multer from "multer";
+
+const upload = multer({ dest: "uploads/" });
+
+router.post("/create", upload.single("image"), createProduct);
 router.get("/products", getAllProducts);
 router.get("/:id", getProduct);
 
