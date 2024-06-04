@@ -3,11 +3,13 @@ import { getCartByUserId } from "../../services/apiService.js";
 import { AuthContext } from "../../contexts/authContext.js";
 import { Card, CardContent, Typography, CardMedia, Box, Button, Grid } from "@mui/material";
 import { useCart } from "../../contexts/useCart.js";
+import { useNavigate } from "react-router-dom";
 
 const CartItemsComponent = () => {
   const [cart, setCart] = useState(null);
     const { user } = useContext(AuthContext);
-    const { removeItem, addItem } = useCart(); 
+  const { removeItem, addItem } = useCart(); 
+  let navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -28,9 +30,10 @@ const CartItemsComponent = () => {
     (total, item) => total + item.product.price * item.quantity,
     0
   );
-    console.log(cart)
+  
      const handleCheckout = () => {
        console.log("Procediendo al pago...");
+       navigate("/payment")
     };
     
     const handleRemoveToCart = async (itemId) => {

@@ -9,6 +9,7 @@ import RegistrationForm from "./components/login/CheckIn.jsx";
 import FormChickens from "./components/chickens/FormChickens.jsx";
 import { AuthContext } from './contexts/authContext.js';
 import CartItemsComponent from './components/cart/CartItemsComponent.jsx';
+import PaymentComponent from './components/payment/PaymentComponent.jsx';
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
           }
         />
         <Route path="/cart" element={<CartItemsComponent />} />
+        <Route path="/payment" element={<PaymentComponent />} />
       </Routes>
     </Router>
   );
