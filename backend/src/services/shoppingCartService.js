@@ -35,15 +35,13 @@ export async function addItemToCart(req, res) {
 }
 
 
-
-
 export async function removeItemFromCart(req, res) {
-  const { productId } = req.params;
-
+  const { itemId } = req.params;
+  console.log(itemId);
   const cart = await ShoppingCart.findOne({ user: req.user.id });
 
   const itemIndex = cart.items.findIndex(
-    (item) => item.product.toString() === productId
+    (item) => item._id.toString() === itemId
   );
 
   if (itemIndex > -1) {
@@ -53,3 +51,19 @@ export async function removeItemFromCart(req, res) {
 
   res.status(200).json(cart);
 }
+
+
+export const getCartByUserId = async (req, res) => {
+  
+  try {
+    const cart = await ShoppingCart.findOne({
+      user: req.params.userId,
+    }).populate("items.product");
+    if (!cart) {
+      return res.status(404).json({ message: "Carrito no encontrado" });
+    }
+    res.json(cart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

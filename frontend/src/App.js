@@ -8,6 +8,7 @@ import Login from './components/login/Loging';
 import RegistrationForm from "./components/login/CheckIn.jsx";
 import FormChickens from "./components/chickens/FormChickens.jsx";
 import { AuthContext } from './contexts/authContext.js';
+import CartItemsComponent from './components/cart/CartItemsComponent.jsx';
 
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
             )
           }
         />
+        <Route path="/cart" element={<CartItemsComponent />} />
       </Routes>
     </Router>
   );

@@ -18,7 +18,7 @@ export function useCart() {
   const removeItem = async (itemId) => {
     dispatch({ type: "REMOVE_ITEM", itemId });
 
-    const response = await api.post(`${API_BASE_URL}shopping/cart/${itemId}`, {
+    const response = await api.delete(`${API_BASE_URL}shopping/cart/${itemId}`, {
       method: "DELETE",
     });
     return response;

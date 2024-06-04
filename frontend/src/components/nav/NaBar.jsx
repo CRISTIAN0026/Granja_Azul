@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { AuthContext } from "../../contexts/authContext.js";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +8,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
+import CartIconComponent from "../cart/CartComponent.jsx";
+
 
 function NavBar() {
   const { user, logout } = useContext(AuthContext);
@@ -30,7 +32,7 @@ function NavBar() {
   };
 
 
-const settings = ["Cerrar sesión"];
+const settings = ["Cerrar sesión", "Mis compras"];
 
 
   return (
@@ -39,23 +41,32 @@ const settings = ["Cerrar sesión"];
         {user ? (
           <Box sx={{ flexGrow: 0 }}>
             {user && (
-              <Box>
-                <Tooltip title="Pulse click">
-                  <div>
-                    <IconButton
-                      sx={{ color: "black" }}
-                      onClick={handleOpenUserMenu}
-                    >
-                      <Avatar alt={user?.username} />
-                    </IconButton>
-                    <Typography textAlign="center">
-                      {user?.username}
-                    </Typography>
-                  </div>
-                </Tooltip>
-                {user?.type === "admin" &&<Button variant="contained" href="/crear-ave">
-                  Publicar productos
-                </Button>}
+              <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                <Grid>
+                  <Tooltip title="Pulse click">
+                    <div>
+                      <IconButton
+                        sx={{ color: "black" }}
+                        onClick={handleOpenUserMenu}
+                      >
+                        <Avatar alt={user?.username} />
+                      </IconButton>
+                      <Typography textAlign="center">
+                        {user?.username}
+                      </Typography>
+                    </div>
+                  </Tooltip>
+                  {user?.type === "admin" && (
+                    <Button variant="contained" href="/crear-ave">
+                      Publicar productos
+                    </Button>
+                  )}
+                </Grid>
+                {user?.type === "client" && (
+                  <Grid sx={{ display: "flex", alignItems: "center" }}>
+                    <CartIconComponent userId={user.id} />
+                  </Grid>
+                )}
               </Box>
             )}
             <Menu

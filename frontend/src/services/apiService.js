@@ -67,3 +67,15 @@ export const loginUser = async ({ email, password }) => {
 };
 
 
+export const getCartByUserId = async (userId) => {
+  try {
+
+    const response = await api.get(`shopping/cart/${userId}`);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo el carrito:", error);
+    return false;
+  }
+};
+
