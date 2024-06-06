@@ -16,6 +16,13 @@ function NavBar() {
   let navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const handleMenuItemClick = (setting) => {
+    if (setting === "Cerrar sesión") {
+      onLogout();
+    } else if("Mis compras"){
+      window.location.href = "/mis-compras";
+    }
+  };
 
   const onLogout = () => {
     logout();
@@ -86,7 +93,10 @@ const settings = ["Cerrar sesión", "Mis compras"];
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={onLogout}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleMenuItemClick(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

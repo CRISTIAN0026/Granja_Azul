@@ -26,7 +26,7 @@ const CartItemsComponent = () => {
     return <div>No hay productos en el carrito</div>;
   }
 
-  const totalCost = cart.items.reduce(
+  const totalCost = cart?.items?.reduce(
     (total, item) => total + item.product.price * item.quantity,
     0
   );
@@ -40,7 +40,7 @@ const CartItemsComponent = () => {
       console.log(itemId);
       await removeItem(itemId);
       const data = await getCartByUserId(user?.id);
-      if (data && data.items) {
+      if (data && data?.items) {
         setCart(data);
       }
     };
@@ -49,7 +49,7 @@ const CartItemsComponent = () => {
       console.log(item);
       await addItem(item);
       const data = await getCartByUserId(user?.id);
-      if (data && data.items) {
+      if (data && data?.items) {
         setCart(data);
       }
     };
@@ -58,7 +58,7 @@ const CartItemsComponent = () => {
     <Grid container justifyContent="space-evenly">
       <Box>
         <h2>Tus productos</h2>
-        {cart.items.map((item, index) => (
+        {cart?.items?.map((item, index) => (
           <Card key={index} sx={{ marginBottom: 2, display: "flex" }}>
             <CardMedia
               component="img"
@@ -107,7 +107,7 @@ const CartItemsComponent = () => {
       </Box>
       <Box>
         <h2>Resumen del pago</h2>
-        {cart.items.map((item, index) => (
+        {cart?.items?.map((item, index) => (
           <div key={index}>
             <h3>{item.product.name}</h3>
             <p>Cantidad: {item.quantity}</p>

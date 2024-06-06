@@ -79,3 +79,46 @@ export const getCartByUserId = async (userId) => {
   }
 };
 
+export const createPayment = async (paymentData) => {
+  try {
+    const response = await api.post(
+      "payment/create",
+      paymentData
+    );
+    console.log("Pago creado:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al crear el pago:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
+
+
+export const getAllPayments = async () => {
+  try {
+    const response = await api.get(`payment/get`);
+    console.log("Todos los pagos:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener todos los pagos:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
+
+export const getPaymentsByUser = async () => {
+  try {
+    const response = await api.get(
+      `payment/user`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener los pagos del usuario:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};

@@ -24,9 +24,17 @@ export function useCart() {
     return response;
   };
 
+  const clearCart = async () => {
+    dispatch({ type: "CLEAR_CART" });
+
+    const response = await api.post(`${API_BASE_URL}shopping/clear`);
+    return response;
+  };
+
   return {
     cartItems: state.items,
     addItem,
     removeItem,
+    clearCart
   };
 }

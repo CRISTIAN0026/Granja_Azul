@@ -11,11 +11,9 @@ export default function Nav() {
     const [buttonColor, setButtonColor] = useState(window.location.pathname);
 
 
-    const inicio = '/',
-        aves = '/nuestras-aves',
-        nosotros = '/nosotros',
-        login = "/login",
-        registrarse = '/registrase';
+  const inicio = '/',
+    aves = '/nuestras-aves',
+    nosotros = '/nosotros';
 
 
   return (

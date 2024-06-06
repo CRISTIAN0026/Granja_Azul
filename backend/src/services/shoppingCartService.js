@@ -67,3 +67,20 @@ export const getCartByUserId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export async function clearCart(req, res) {
+  try {
+    const cart = await ShoppingCart.findOne({ user: req.user.id });
+    if (!cart) {
+      return res.status(404).json({ message: "Carrito no encontrado" });
+    }
+
+    cart.items = [];
+    await cart.save();
+
+    res.status(200).json({ message: "Carrito vaciado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Hubo un error al vaciar el carrito" });
+  }
+}

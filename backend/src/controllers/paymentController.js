@@ -1,7 +1,11 @@
-import { Router } from "express";
-const router = Router();
-import { makePayment } from "../services/paymentService.js";
+import express from "express";
+import { createPayment, getPayments, getPaymentsByUser } from "../services/paymentService.js";
+import authenticateJWT from "../middleware/auth.js";
 
-router.post("/make", makePayment);
+const router = express.Router();
+
+router.post("/create", createPayment);
+router.get("/get", getPayments);
+router.get("/user", authenticateJWT, getPaymentsByUser);
 
 export default router;
